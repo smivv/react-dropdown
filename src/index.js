@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import SelectBox from './lib/select-box';
 
-export default class Example extends React.Component{
+class Example extends React.Component{
 
     state = {
         color: null,
@@ -12,16 +12,20 @@ export default class Example extends React.Component{
     };
 
     handleChange(color) {
+        console.log(color);
         this.setState({ color: color })
     };
     handleMultiChange(colors) {
+        console.log(colors);
         this.setState({ colors: colors })
     };
 
     handleChange2(color) {
+        console.log(color);
         this.setState({ color2: color })
     };
     handleMultiChange2(colors) {
+        console.log(colors);
         this.setState({ colors2: colors })
     };
     render() {
@@ -32,12 +36,12 @@ export default class Example extends React.Component{
                            className="my-example-select-box"
                            onChange={(e) => this.handleChange(e)}
                            value={this.state.color}>
-                    <option value="">No selected</option>
-                    <option value="red" radioGroup="Colors">Red</option>
-                    <option value="dark" radioGroup="Shades">Dark</option>
-                    <option value="blue" radioGroup="Colors">Blue</option>
-                    <option value="black" radioGroup="Colors">Black</option>
-                    <option value="light" radioGroup="Shades">Light</option>
+                    <option key="1" value="">No selected</option>
+                    <option key="2" value="red" radioGroup="Colors">Red</option>
+                    <option key="3" value="dark" radioGroup="Shades">Dark</option>
+                    <option key="4" value="blue" radioGroup="Colors">Blue</option>
+                    <option key="5" value="black" radioGroup="Colors">Black</option>
+                    <option key="6" value="light" radioGroup="Shades">Light</option>
                 </SelectBox>
                 <h1>Multiple Select Box Example</h1>
                 <SelectBox label="Favorite Color"
@@ -45,12 +49,12 @@ export default class Example extends React.Component{
                            multiple="true"
                            onChange={(e) => this.handleMultiChange(e)}
                            value={this.state.colors}>
-                    <option value="">No selected</option>
-                    <option value="red" radioGroup="Colors">Red</option>
-                    <option value="dark" radioGroup="Shades">Dark</option>
-                    <option value="blue" radioGroup="Colors">Blue</option>
-                    <option value="black" radioGroup="Colors">Black</option>
-                    <option value="light" radioGroup="Shades">Light</option>
+                    <option key="1" value="">No selected</option>
+                    <option key="2" value="red" radioGroup="Colors">Red</option>
+                    <option key="3" value="dark" radioGroup="Shades">Dark</option>
+                    <option key="4" value="blue" radioGroup="Colors">Blue</option>
+                    <option key="5" value="black" radioGroup="Colors">Black</option>
+                    <option key="6" value="light" radioGroup="Shades">Light</option>
                 </SelectBox>
                 <h1>Select Box Example with Separated Groups</h1>
                 <SelectBox label="Favorite Color"
@@ -58,12 +62,12 @@ export default class Example extends React.Component{
                            separatedGroups="true"
                            onChange={(e) => this.handleChange2(e)}
                            value={this.state.color2}>
-                    <option value="">No selected</option>
-                    <option value="red" radioGroup="Colors">Red</option>
-                    <option value="dark" radioGroup="Shades">Dark</option>
-                    <option value="blue" radioGroup="Colors">Blue</option>
-                    <option value="black" radioGroup="Colors">Black</option>
-                    <option value="light" radioGroup="Shades">Light</option>
+                    <option key="1" value="">No selected</option>
+                    <option key="2" value="red" radioGroup="Colors">Red</option>
+                    <option key="3" value="dark" radioGroup="Shades">Dark</option>
+                    <option key="4" value="blue" radioGroup="Colors">Blue</option>
+                    <option key="5" value="black" radioGroup="Colors">Black</option>
+                    <option key="6" value="light" radioGroup="Shades">Light</option>
                 </SelectBox>
                 <h1>Multiple Select Box Example with Separated Groups</h1>
                 <SelectBox label="Favorite Color"
@@ -72,12 +76,12 @@ export default class Example extends React.Component{
                            separatedGroups="true"
                            onChange={(e) => this.handleMultiChange2(e)}
                            value={this.state.colors2}>
-                    <option value="">No selected</option>
-                    <option value="red" radioGroup="Colors">Red</option>
-                    <option value="dark" radioGroup="Shades">Dark</option>
-                    <option value="blue" radioGroup="Colors">Blue</option>
-                    <option value="black" radioGroup="Colors">Black</option>
-                    <option value="light" radioGroup="Shades">Light</option>
+                    <option key="1" value="">No selected</option>
+                    <option key="2" value="red" radioGroup="Colors">Red</option>
+                    <option key="3" value="dark" radioGroup="Shades">Dark</option>
+                    <option key="4" value="blue" radioGroup="Colors">Blue</option>
+                    <option key="5" value="black" radioGroup="Colors">Black</option>
+                    <option key="6" value="light" radioGroup="Shades">Light</option>
                 </SelectBox>
             </div>
         );

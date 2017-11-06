@@ -1,9 +1,9 @@
-var React = require('react');
-var ReactDOM = require('react-dom');
+import React from 'react'
+import ReactDOM from 'react-dom'
 
-var idInc = 0;
+let inc = 0;
 
-var keyHandlers = {
+const keyHandlers = {
     37: 'handleLeftKey',
     38: 'handleUpKey',
     39: 'handleRightKey',
@@ -18,14 +18,15 @@ var keyHandlers = {
 export default class SelectBox extends React.Component{
 
     state = {
-        id: 'react-select-box-' + (++idInc),
+        id: 'react-select-box-' + (inc++),
         open: false,
         focusedOption: -1,
         focusedGroup: 0,
         pendingValue: [],
         displayName: 'exports',
         clickingOption: false,
-        blurTimeout: null
+        blurTimeout: null,
+        closeText: 'close'
     };
 
     changeOnClose() {
@@ -50,7 +51,6 @@ export default class SelectBox extends React.Component{
 
     interceptEvent(event) {
         if(event){
-            console.log(event.keyCode);
             event.preventDefault();
             event.stopPropagation();
         }
@@ -74,10 +74,10 @@ export default class SelectBox extends React.Component{
             this.clickingOption = false;
             this.interceptEvent(event);
             if (this.isMultiple()) {
-                var selected = [];
-                if (val != null) {
+                let selected = [];
+                if (val !== null && val !== undefined) {
                     selected = this.value().slice(0);
-                    var index = selected.indexOf(val);
+                    let index = selected.indexOf(val);
                     if (index !== -1) {
                         selected.splice(index, 1);
                     } else {
@@ -102,9 +102,9 @@ export default class SelectBox extends React.Component{
     };
 
     handleNativeChange(event) {
-        var val = event.target.value;
+        let val = event.target.value;
         if (this.isMultiple()) {
-            var children = [].slice.call(event.target.childNodes, 0);
+            let children = [].slice.call(event.target.childNodes, 0);
             val = children.reduce(function (memo, child) {
                 if (child.selected) {
                     memo.push(child.value);
@@ -150,21 +150,19 @@ export default class SelectBox extends React.Component{
     };
 
     moveFocus(move) {
-        var len;
+        let len;
         if(this.props.separatedGroups)
             len = this.groups()[this.state.focusedGroup].options.length;
         else
             len = React.Children.count(this.props.children);
 
-        var idx = (this.state.focusedOption + move + len) % len;
-        console.log('moveFocus', len, idx);
+        let idx = (this.state.focusedOption + move + len) % len;
         this.setState({focusedOption: idx});
     };
 
     moveGroupFocus(move) {
-        var len = this.groups().length;
-        var idx = (this.state.focusedGroup + move + len) % len;
-        console.log('moveGroupFocus', len, idx);
+        let len = this.groups().length;
+        let idx = (this.state.focusedGroup + move + len) % len;
         this.setState({focusedGroup: idx, focusedOption: -1});
     };
 
@@ -229,7 +227,7 @@ export default class SelectBox extends React.Component{
     };
 
     label() {
-        var selected = this.options()
+        let selected = this.options()
             .filter(function (option) {
                 return this.isSelected(option.value);
             }.bind(this))
@@ -246,7 +244,7 @@ export default class SelectBox extends React.Component{
     };
 
     options() {
-        var options = [];
+        let options = [];
         React.Children.forEach(this.props.children, function (option) {
             options.push({
                 value: option.props.value,
@@ -265,18 +263,18 @@ export default class SelectBox extends React.Component{
     };
 
     groups() {
-        var groups = [];
+        let groups = [];
 
-        var hasGroup = function(groups, name) {
-            for (var i = 0; i < groups.length; ++i) {
+        let hasGroup = function(groups, name) {
+            for (let i = 0; i < groups.length; ++i) {
                 if (groups[i].name === name)
                     return i;
             }
             return -1;
         };
         React.Children.forEach(this.props.children, function (option){
-            var name = option.props.radioGroup;
-            var i = hasGroup(groups, name);
+            let name = option.props.radioGroup;
+            let i = hasGroup(groups, name);
             if(i === -1){
                 i = groups.push({
                         name: option.props.radioGroup,
@@ -290,7 +288,7 @@ export default class SelectBox extends React.Component{
             });
         });
 
-        var index = 0, i, j;
+        let index = 0, i, j;
         if(!this.props.separatedGroups) {
             for (i = 0; i < groups.length; ++i) {
                 for (j = 0; j < groups[i].options.length; ++j) {
@@ -314,14 +312,14 @@ export default class SelectBox extends React.Component{
     };
 
     value() {
-        var value = this.changeOnClose() ?
+        let value = this.changeOnClose() ?
             this.state.pendingValue :
             this.props.value;
 
         if (!this.isMultiple() || Array.isArray(value)) {
             return value;
         }
-        if (value != null) {
+        if (value !== null) {
             return [value];
         }
         return [];
@@ -331,7 +329,7 @@ export default class SelectBox extends React.Component{
         if (this.isMultiple()) {
             return this.value().length > 0;
         }
-        return this.value() != null;
+        return this.value() !== null;
     };
 
     isSelected(value) {
@@ -342,7 +340,7 @@ export default class SelectBox extends React.Component{
     };
 
     render() {
-        var className = 'react-select-box-container';
+        let className = 'react-select-box-container';
         if (this.props.className) {
             className += ' ' + this.props.className;
         }
@@ -367,7 +365,7 @@ export default class SelectBox extends React.Component{
     };
 
     renderOptionMenu() {
-        var className = "";
+        let className = "";
         if (this.props.separatedGroups) {
             className += 'react-select-box-options-wide';
         }else{
@@ -376,8 +374,8 @@ export default class SelectBox extends React.Component{
         if (!this.state.open) {
             className += ' react-select-box-hidden';
         }
-        var groups = this.groups();
-        var rendered = "";
+        let groups = this.groups();
+        let rendered = "";
         if(this.props.separatedGroups){
             rendered = (
                 <div className="react-select-box-off-screen">
@@ -408,18 +406,17 @@ export default class SelectBox extends React.Component{
     };
 
     renderGroupHeader(group, i) {
-        var className = "react-select-box-group-name";
+        let className = "react-select-box-group-name";
         if(i === this.state.focusedGroup)
             className += " react-select-box-group-name-selected";
-        var name;
+        let name;
         if(typeof group.name !== 'undefined'){
             name = group.name;
         }else{
             name = "Undefined";
         }
         return (
-            <a href="#"
-               role="button"
+            <a role="button"
                onClick = {(e) => this.handleGroupChange(group.name)(e)}
                onMouseDown = {(e) => this.handleMouseDown(e)}
                className={className}
@@ -440,7 +437,7 @@ export default class SelectBox extends React.Component{
                 </div>
             );
         }else{
-            var header = "";
+            let header = "";
             if(typeof group.name !== 'undefined'){
                 header = (
                     <h3 className="react-select-box-group-header">
@@ -451,7 +448,7 @@ export default class SelectBox extends React.Component{
                 );
             }
             return (
-                <div className="react-select-box-group">
+                <div className="react-select-box-group" key={i}>
                     {header}
                     {group.options.map((option, j) => this.renderOption(option, i, j))}
                 </div>
@@ -460,17 +457,15 @@ export default class SelectBox extends React.Component{
     };
 
     renderOption(option, i, j){
-        var className = 'react-select-box-option';
+        let className = 'react-select-box-option';
         if (option.index === this.state.focusedOption) {
             className += ' react-select-box-option-focused';
         }
         if (this.isSelected(option.value)) {
-            console.log(option.value);
             className += ' react-select-box-option-selected';
         }
         return (
             <a id={this.state.id + '-' + i + '-' + j}
-               href="#"
                role="button"
                onClick = {(e) => this.handleChange(option.value)(e)}
                onMouseDown = {(e) => this.handleMouseDown(e)}
@@ -485,11 +480,10 @@ export default class SelectBox extends React.Component{
     };
 
     renderNativeSelect() {
-        var id = this.state.id + '-native-select';
-        var multiple = this.isMultiple();
-        var empty = multiple ? null : <option key="" value="">No selection</option>;
-        var options = [empty].concat(this.props.children);
-        console.log(multiple, this.props.value);
+        let id = this.state.id + '-native-select';
+        let multiple = this.isMultiple();
+        let empty = multiple ? null : <option key="" value="">No selection</option>;
+        let options = [empty].concat(this.props.children);
         return (
             <div className="react-select-box-native">
                 <label htmlFor={id}>
