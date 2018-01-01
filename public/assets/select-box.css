@@ -82,6 +82,7 @@
     text-indent: -9999em;
     z-index: 3;
     border: none;
+    cursor: hand;
 
 }
 .react-select-box-clear:before {
