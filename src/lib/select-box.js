@@ -432,7 +432,7 @@ export default class SelectBox extends React.Component{
     renderGroup(group, i) {
         if (this.props.separatedGroups) {
             return (
-                <div className="react-select-box-group">
+                <div className="react-select-box-group" key={i}>
                     {group.options.map((option, j) => this.renderOption(option, i, j))}
                 </div>
             );
@@ -465,17 +465,19 @@ export default class SelectBox extends React.Component{
             className += ' react-select-box-option-selected';
         }
         return (
-            <a id={this.state.id + '-' + i + '-' + j}
-               role="button"
-               onClick = {(e) => this.handleChange(option.value)(e)}
-               onMouseDown = {(e) => this.handleMouseDown(e)}
-               className = {className}
-               tabIndex = "-1"
-               key = {option.value}
-               onBlur = {(e) => this.handleBlur(e)}
-               onFocus = {(e) => this.handleFocus(e)}>
-                {option.label}
-            </a>
+            <div className="react-select-box-option-wrapper" key={j}>
+                <a id={this.state.id + '-' + i + '-' + j}
+                   role="button"
+                   onClick = {(e) => this.handleChange(option.value)(e)}
+                   onMouseDown = {(e) => this.handleMouseDown(e)}
+                   className = {className}
+                   tabIndex = "-1"
+                   key = {option.value}
+                   onBlur = {(e) => this.handleBlur(e)}
+                   onFocus = {(e) => this.handleFocus(e)}>
+                    {option.label}
+                </a>
+            </div>
         );
     };
 
