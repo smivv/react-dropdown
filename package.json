@@ -1,6 +1,6 @@
 {
-  "name": "dropdown-react-app",
-  "version": "0.1.0",
+  "name": "react-dropdown",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
     "react": "^15.6.1",
